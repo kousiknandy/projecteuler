@@ -1,4 +1,3 @@
-from math import log
 
 def sum_digits(n):
     s = 0
@@ -7,16 +6,16 @@ def sum_digits(n):
         n //= 10
     return s
 
-i = 1
-n = 10
-s = 1
-while True:
-    n += 1
-    s = s+1 if n%10 else sum_digits(n)
-    if s == 1 or s%9 != n%9: continue
-    p = log(n)/log(s)
-    if abs(p - int(p+0.5)) < 0.000001:
-        if s ** int(p+0.5) == n:
-            print(i, int(p+0.5), s, s%9,  n, n%9)
-            if i == 30: break
-            i += 1
+res = []
+for iteration in range(2):
+    for num in range(iteration*1000+1, (iteration+1)*1000+1):
+        v = num
+        if v <= 1: continue
+        for pow in range(1, 100):
+            v *= num
+            if sum_digits(v) == num:
+                res.append(v)
+                #print(iteration, num, pow+1, num**(pow+1), v)
+
+print(sorted(res)[30])
+

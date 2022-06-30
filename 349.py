@@ -1,18 +1,13 @@
 grid = {}
 blacks = 0
-jump = [[(0,-1), (1,0), (0,1), (-1,0)], [(0,1), (-1,0), (0,-1), (1,0)]]
+jump =  [(0,1), (-1,0), (0,-1), (1,0)]
 
 def nextstep(now, dir):
-    onblack = grid.get(now, 0)
-    new = (now[0]+jump[onblack][dir][0], now[1]+jump[onblack][dir][1])
-    grid[now] = 0 if onblack else 1
-    if onblack:
-        dir += 1
-        if dir > 3: dir = 0
-    else:
-        dir -= 1
-        if dir < 0: dir = 3
-    return new, dir, -1 if onblack else 1
+    onblack = grid.get(now, -1)
+    new = (now[0]+jump[dir][0]*onblack, now[1]+jump[dir][1]*onblack)
+    grid[now] = -onblack
+    dir = (dir+onblack) % 4
+    return new, dir, -onblack
 
 ant, dir = (0, 0), 0
 steps = 0
